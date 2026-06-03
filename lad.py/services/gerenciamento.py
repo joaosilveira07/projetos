@@ -30,3 +30,9 @@ def gerenciamento():
             return
         case _:
             print("Opção Inválida!")
+
+def cadastrar_eleitor():
+    nome = input("Por favor, digite seu nome completo.")
+    titulo = int(input("Por favor, digite seu título de eleitor (apenas números): "))
+    cpf = int(input("Por favor, digite seu CPF (apenas números): "))
+    mesario = input("Você atuará como mesário? (S/N): ")

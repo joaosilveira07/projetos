@@ -1,4 +1,7 @@
-import gerenciamento as gr
+from services import (
+    gerenciamento as gr,
+    votacao as vt
+)
 import os
 
 def exibir_opcoes():
@@ -20,7 +23,7 @@ def escolher_opcao():
             case 1:
                 gr.gerenciamento()
             case 2:
-                pass
+                vt.votacao()
             case _:
                 print("Opção Inválida!")
 
