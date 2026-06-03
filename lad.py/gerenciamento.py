@@ -1,0 +1,32 @@
+import os
+
+def gerenciamento():
+    os.system('cls')
+    print("===============================")
+    print("1. Cadastrar Eleitor")
+    print("2. Editar Eleitor")
+    print("3. Remover Eleitor")
+    print("4. Buscar Eleitor")
+    print("5. Listagem de Eleitores")
+    print("6. Gerenciamento de Candidatos")
+    print("7. Voltar ao menu")
+    print("===============================")
+
+    opcao = int(input("Escolha uma opção: "))
+    match opcao:
+        case 1:
+            pass
+        case 2:
+            pass
+        case 3:
+            pass
+        case 4:
+            pass
+        case 5:
+            pass
+        case 6:
+            pass
+        case 7:
+            return
+        case _:
+            print("Opção Inválida!")
