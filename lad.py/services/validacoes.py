@@ -43,3 +43,26 @@ def validar_cpf(cpf):
         return False
 
     return True
+
+def validar_titulo(titulo):
+    soma = 0
+    titulo_resto_1dv = 0
+
+    if len(titulo) != 12:
+        return False
+    
+    if not titulo.isdigit():
+        return False
+
+    for i in range(8):
+        soma += int(titulo[i]) * (2 + i)
+    
+    titulo_resto_1dv = soma % 11
+    if titulo_resto_1dv >= 10:
+        titulo_1dv = 0
+    else:
+        titulo_1dv = titulo_resto_1dv
+
+    
+
+
