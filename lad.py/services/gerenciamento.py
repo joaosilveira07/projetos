@@ -1,3 +1,4 @@
+from db import conexao as cx
 import os
 
 def gerenciamento():
@@ -36,3 +37,14 @@ def cadastrar_eleitor():
     titulo = int(input("Por favor, digite seu título de eleitor (apenas números): "))
     cpf = int(input("Por favor, digite seu CPF (apenas números): "))
     mesario = input("Você atuará como mesário? (S/N): ")
+
+    db = cx.conectar()
+    cursor = db.cursor()
+    cursor.execute(
+        "INSERT INTO eleitor (nome, titulo, cpf, mesario) VALUES %s %s %s %s",
+        (nome, titulo, cpf, mesario)
+    )
+    db.commit()
+    db.close()
+    print("Eleitor cadastrado com sucesso!")
+    
