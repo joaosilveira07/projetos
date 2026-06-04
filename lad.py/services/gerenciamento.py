@@ -1,4 +1,5 @@
 from db import conexao as cx
+from services import validacoes as vd
 import os
 
 def gerenciamento():
@@ -16,7 +17,7 @@ def gerenciamento():
     opcao = int(input("Escolha uma opção: "))
     match opcao:
         case 1:
-            pass
+            cadastrar_eleitor()
         case 2:
             pass
         case 3:
@@ -35,7 +36,12 @@ def gerenciamento():
 def cadastrar_eleitor():
     nome = input("Por favor, digite seu nome completo.")
     titulo = input("Por favor, digite seu título de eleitor (apenas números): ")
+
     cpf = input("Por favor, digite seu CPF (apenas números): ")
+    while vd.validar_cpf(cpf) != True:
+        print("CPF Inválido! Por favor, tente novamente!")
+        cpf = input("Por favor, digite seu CPF (apenas números): ")
+
     mesario = input("Você atuará como mesário? (S/N): ")
 
     

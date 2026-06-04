@@ -1,5 +1,9 @@
 def validar_cpf(cpf):
     soma = 0
+    soma_2dv = 0
+    resto_2dv = 0
+    primeiro_dv = 0
+    segundo_dv = 0
 
     if len(cpf) != 11:
         return False
@@ -25,3 +29,17 @@ def validar_cpf(cpf):
         primeiro_dv = 11 - resto
         if primeiro_dv >= 10:
             primeiro_dv = 0
+
+    for i in range(10):
+        soma_2dv += int(cpf[i]) * (11 - i)
+
+    resto_2dv = soma_2dv % 11
+    if resto_2dv < 2:
+        segundo_dv = 0
+    else:
+        segundo_dv = 11 - resto_2dv
+    
+    if primeiro_dv != int(cpf[9]) or segundo_dv != int(cpf[10]):
+        return False
+
+    return True
