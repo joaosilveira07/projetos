@@ -63,6 +63,33 @@ def validar_titulo(titulo):
     else:
         titulo_1dv = titulo_resto_1dv
 
+    if int(titulo[8]) == 0 and int(titulo[9]) == 1:
+        if titulo_resto_1dv == 0:
+            titulo_1dv = 1
     
+    if int(titulo[8]) == 0 and int(titulo[9]) == 2:
+        if titulo_resto_1dv == 0:
+            titulo_1dv = 1
 
-
+    if titulo_1dv != int(titulo[10]):
+        return False
+    
+    soma_2dv = (int(titulo[8]) * 7) + (int(titulo[9]) * 8) + (titulo_1dv * 9)
+    titulo_resto_2dv = soma_2dv % 11
+    if titulo_resto_2dv >= 10:
+        titulo_2dv =  0
+    else:
+        titulo_2dv = titulo_resto_2dv
+    
+    if int(titulo[8]) == 0 and int(titulo[9]) == 1:
+        if titulo_resto_2dv == 0:
+            titulo_2dv = 1
+    
+    if int(titulo[8]) == 0 and int(titulo[9]) == 2:
+        if titulo_resto_2dv == 0:
+            titulo_2dv = 1
+    
+    if titulo_2dv != int(titulo[11]):
+        return False
+    
+    return True
