@@ -34,9 +34,11 @@ def gerenciamento():
 
 def cadastrar_eleitor():
     nome = input("Por favor, digite seu nome completo.")
-    titulo = int(input("Por favor, digite seu título de eleitor (apenas números): "))
-    cpf = int(input("Por favor, digite seu CPF (apenas números): "))
+    titulo = input("Por favor, digite seu título de eleitor (apenas números): ")
+    cpf = input("Por favor, digite seu CPF (apenas números): ")
     mesario = input("Você atuará como mesário? (S/N): ")
+
+    
 
     db = cx.conectar()
     cursor = db.cursor()
