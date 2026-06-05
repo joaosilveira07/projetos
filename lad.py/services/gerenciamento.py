@@ -98,5 +98,6 @@ def buscar_eleitor():
             (cpf_para_buscar,)
         )
         resultados = cursor.fetchall()
-        for elemento in resultados:
-            print(f"Eleitor: {elemento[0]} | Título: {elemento[1]} | CPF: {elemento[2]} | Mesário: {elemento[3]}")
+        if cpf_para_buscar in resultados:
+            for elemento in resultados:
+                print(f"Eleitor: {elemento[1]} | Título: {elemento[2]} | CPF: {elemento[3]} | Mesário: {elemento[4]}")
