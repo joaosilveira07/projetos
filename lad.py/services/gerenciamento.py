@@ -25,7 +25,7 @@ def gerenciamento():
         case 4:
             pass
         case 5:
-            pass
+            listar_eleitor()
         case 6:
             pass
         case 7:
@@ -60,3 +60,15 @@ def cadastrar_eleitor():
     db.close()
     print("Eleitor cadastrado com sucesso!")
     
+
+def listar_eleitor():
+    db = cx.conectar()
+    cursor = db.cursor()
+    cursor.execute(
+        "SELECT nome, titulo, cpf, mesario FROM eleitor"
+    )
+    resultados = cursor.fetchall()
+    for eleitor in resultados:
+        print(f"Eleitor: {eleitor[0]} | Título: {eleitor[1]} | CPF: {eleitor[2]} | Mesário: {eleitor[3]}")
+
+    db.close()
