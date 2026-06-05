@@ -2,7 +2,7 @@ from db import conexao as cx
 from services import validacoes as vd
 import os
 
-def gerenciamento():
+def exibir_opcoes():
     os.system('cls')
     print("===============================")
     print("1. Cadastrar Eleitor")
@@ -14,27 +14,32 @@ def gerenciamento():
     print("7. Voltar ao menu")
     print("===============================")
 
+def gerenciamento():
+    exibir_opcoes()
+    
     opcao = int(input("Escolha uma opção: "))
-    match opcao:
-        case 1:
-            cadastrar_eleitor()
-        case 2:
-            pass
-        case 3:
-            pass
-        case 4:
-            pass
-        case 5:
-            listar_eleitor()
-        case 6:
-            pass
-        case 7:
-            return
-        case _:
-            print("Opção Inválida!")
+    while opcao != 7:
+        match opcao:
+            case 1:
+                cadastrar_eleitor()
+            case 2:
+                pass
+            case 3:
+                pass
+            case 4:
+                buscar_eleitor()
+            case 5:
+                listar_eleitor()
+            case 6:
+                pass
+            case _:
+                print("Opção Inválida!")
+        
+        exibir_opcoes()
+        opcao = int(input("Escolha uma opção: "))
 
 def cadastrar_eleitor():
-    nome = input("Por favor, digite seu nome completo.")
+    nome = input("Por favor, digite seu nome completo: ")
     
     titulo = input("Por favor, digite seu título de eleitor (apenas números): ")
     while vd.validar_titulo(titulo) != True:
@@ -53,7 +58,7 @@ def cadastrar_eleitor():
     db = cx.conectar()
     cursor = db.cursor()
     cursor.execute(
-        "INSERT INTO eleitor (nome, titulo, cpf, mesario) VALUES %s %s %s %s",
+        "INSERT INTO eleitor (nome, titulo, cpf, mesario) VALUES (%s, %s, %s, %s)",
         (nome, titulo, cpf, mesario)
     )
     db.commit()
@@ -69,6 +74,29 @@ def listar_eleitor():
     )
     resultados = cursor.fetchall()
     for eleitor in resultados:
-        print(f"Eleitor: {eleitor[0]} | Título: {eleitor[1]} | CPF: {eleitor[2]} | Mesário: {eleitor[3]}")
+        mesario = ""
+        if eleitor[3] == "S":
+            mesario = "Sim"
+        else:
+            mesario = "Não"
+        print(f"Eleitor: {eleitor[0]} | Título: {eleitor[1]} | CPF: {eleitor[2]} | Mesário: {mesario}")
+        
 
     db.close()
+    input("Aperte qualquer tecla para voltar ao menu: ")
+
+def buscar_eleitor():
+    db = cx.conectar()
+    cursor = db.cursor()
+
+    print("Você quer buscar por CPF ou por Título de Eleitor? ")
+    resposta = input("Digite 'CPF' ou 'Titulo': ")
+    if resposta  == "CPF":
+        cpf_para_buscar = input("Digite o CPF que você quer buscar: ")
+        cursor.execute(
+            "SELECT * FROM eleitor WHERE cpf = %s",
+            (cpf_para_buscar,)
+        )
+        resultados = cursor.fetchall()
+        for elemento in resultados:
+            print(f"Eleitor: {elemento[0]} | Título: {elemento[1]} | CPF: {elemento[2]} | Mesário: {elemento[3]}")
