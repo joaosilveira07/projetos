@@ -23,9 +23,9 @@ def gerenciamento():
             case 1:
                 cadastrar_eleitor()
             case 2:
-                pass
+                print("Funcionalidade em desenvolvimento...")
             case 3:
-                pass
+                remover_eleitor()
             case 4:
                 buscar_eleitor()
             case 5:
@@ -57,13 +57,18 @@ def cadastrar_eleitor():
 
     db = cx.conectar()
     cursor = db.cursor()
-    cursor.execute(
-        "INSERT INTO eleitor (nome, titulo, cpf, mesario) VALUES (%s, %s, %s, %s)",
-        (nome, titulo, cpf, mesario)
-    )
-    db.commit()
-    db.close()
-    print("Eleitor cadastrado com sucesso!")
+    try:
+        cursor.execute(
+            "INSERT INTO eleitor (nome, titulo, cpf, mesario) VALUES (%s, %s, %s, %s)",
+            (nome, titulo, cpf, mesario)
+        )
+
+        db.commit()
+        db.close()
+        print("Eleitor cadastrado com sucesso!")
+
+    except:
+        print("CPF ou Título já cadastrado!")
     
 
 def listar_eleitor():
@@ -73,6 +78,10 @@ def listar_eleitor():
         "SELECT nome, titulo, cpf, mesario FROM eleitor"
     )
     resultados = cursor.fetchall()
+    
+    if len(resultados) == 0:
+        print("Nenhum eleitor foi cadastrado ainda!")
+
     for eleitor in resultados:
         mesario = ""
         if eleitor[3] == "S":
@@ -91,7 +100,7 @@ def buscar_eleitor():
 
     print("Você quer buscar por CPF ou por Título de Eleitor? ")
     resposta = input("Digite 'CPF' ou 'T' para Título: ")
-    if resposta  == "CPF":
+    if resposta.lower()  == "cpf":
         cpf_para_buscar = input("Digite o CPF que você quer buscar: ")
         cursor.execute(
             "SELECT * FROM eleitor WHERE cpf = %s",
@@ -101,13 +110,31 @@ def buscar_eleitor():
         if cpf_para_buscar in resultados:
             for elemento in resultados:
                 print(f"Eleitor: {elemento[1]} | Título: {elemento[2]} | CPF: {elemento[3]} | Mesário: {elemento[4]}")
-    elif resposta == "T":
+    elif resposta.lower() == "t":
         titulo_para_buscar = input("Digite o Título que você quer buscar: ")
         cursor.execute(
-            "SELECT * FROM eleitor WHERE cpf = %s",
+            "SELECT * FROM eleitor WHERE titulo = %s",
             (titulo_para_buscar,)
         )
         resultados = cursor.fetchall()
         if titulo_para_buscar in resultados:
             for elemento in resultados:
                 print(f"Eleitor: {elemento[1]} | Título: {elemento[2]} | CPF: {elemento[3]} | Mesário: {elemento[4]}")
+
+def remover_eleitor():
+    db = cx.conectar()
+    cursor = db.cursor()
+    
+    cpf_para_remover = input("Digite o CPF do Eleitor que você deseja remover: ")
+    cursor.execute(
+        "DELETE FROM eleitor WHERE cpf = %s",
+        (cpf_para_remover,)
+    )
+    db.commit()
+
+    if cursor.rowcount == 0:
+        print("Eleitor não encontrado!")
+    else:
+        print("Eleitor removido com sucesso!")
+
+    db.close()
