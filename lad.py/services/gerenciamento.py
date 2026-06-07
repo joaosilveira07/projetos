@@ -90,7 +90,7 @@ def buscar_eleitor():
     cursor = db.cursor()
 
     print("Você quer buscar por CPF ou por Título de Eleitor? ")
-    resposta = input("Digite 'CPF' ou 'Titulo': ")
+    resposta = input("Digite 'CPF' ou 'T' para Título: ")
     if resposta  == "CPF":
         cpf_para_buscar = input("Digite o CPF que você quer buscar: ")
         cursor.execute(
@@ -99,5 +99,15 @@ def buscar_eleitor():
         )
         resultados = cursor.fetchall()
         if cpf_para_buscar in resultados:
+            for elemento in resultados:
+                print(f"Eleitor: {elemento[1]} | Título: {elemento[2]} | CPF: {elemento[3]} | Mesário: {elemento[4]}")
+    elif resposta == "T":
+        titulo_para_buscar = input("Digite o Título que você quer buscar: ")
+        cursor.execute(
+            "SELECT * FROM eleitor WHERE cpf = %s",
+            (titulo_para_buscar,)
+        )
+        resultados = cursor.fetchall()
+        if titulo_para_buscar in resultados:
             for elemento in resultados:
                 print(f"Eleitor: {elemento[1]} | Título: {elemento[2]} | CPF: {elemento[3]} | Mesário: {elemento[4]}")
