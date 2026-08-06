@@ -30,16 +30,18 @@ public class ContaBancaria{
         if (valor <= 0){
             return false;
         }
-
-        return true;
+        else{
+            return true;
+        }
     }
 
     public boolean possuiSaldoSuficiente(double valor){
         if (valor > this.saldo){
             return false;
         }
-        
-        return true;
+        else{
+            return true;
+        }
     }
     
     public void transferir(double valor, ContaBancaria destino){
