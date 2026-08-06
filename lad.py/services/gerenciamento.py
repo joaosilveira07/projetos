@@ -31,7 +31,7 @@ def gerenciamento():
             case 5:
                 listar_eleitor()
             case 6:
-                pass
+                print("Funcionalidade em desenvolvimento...")
             case _:
                 print("Opção Inválida!")
         
