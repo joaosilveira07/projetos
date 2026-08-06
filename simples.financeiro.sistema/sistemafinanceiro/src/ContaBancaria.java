@@ -5,40 +5,79 @@ public class ContaBancaria{
     private Cliente titular;
 
     public void depositar(double valor){
-        validarValor(valor);
-
-        this.saldo += valor;
-        System.out.println("Depósito realizado com sucesso!");
-        System.out.printf("Saldo atualizado: %.2f %n", saldo);
+        if (validarValorPositivo(valor)){
+            this.saldo += valor;
+            System.out.println("Depósito realizado com sucesso!");
+            System.out.printf("Saldo atualizado: %.2f %n", saldo);
+        }
+        else{
+            System.out.println("Transação não autorizada.");
+        }
     }
 
     public void sacar(double valor){
-        validarValor(valor);
-
-        if (valor > this.saldo){
-            System.out.println("Saque não autorizado. Saldo insuficiente.");
-        }
-        else{
+        if (validarValorPositivo(valor) && possuiSaldoSuficiente(valor)){
             this.saldo -= valor;
             System.out.println("Saque realizado com sucesso!");
             System.out.printf("Saldo atualizado: %.2f %n", saldo);
         }
+        else{
+            System.out.println("Transação não autorizada.");
+        }
     }
 
-    public void validarValor(double valor){
+    public boolean validarValorPositivo(double valor){
         if (valor <= 0){
-            System.out.println("Transação não autorizada.");
+            return false;
         }
-        else if (valor > this.saldo){
-            System.out.println("Transação não autorizada.");
+
+        return true;
+    }
+
+    public boolean possuiSaldoSuficiente(double valor){
+        if (valor > this.saldo){
+            return false;
         }
+        
+        return true;
     }
     
     public void transferir(double valor, ContaBancaria destino){
-        validarValor(valor);
+        if (validarValorPositivo(valor) && possuiSaldoSuficiente(valor)){
+            this.sacar(valor);
+            destino.depositar(valor);
 
-        
+            System.out.println("Transferência realizada com sucesso!");
+        }
+        else{
+            System.out.println("Transação não autorizada.");
+        }
     }
+
+    public int getNumero(){
+        return this.numero;
+    }
+
+    public void setNumero(int numero){
+        this.numero = numero;
+    }
+
+    public int getAgencia(){
+        return this.agencia;
+    }
+
+    public void setAgencia(int agencia){
+        this.agencia = agencia;
+    }
+
+    public Cliente getTitular(){
+        return this.titular;
+    }
+
+    public void setTitular(Cliente titular){
+        this.titular = titular;
+    }
+
 
 
 }
