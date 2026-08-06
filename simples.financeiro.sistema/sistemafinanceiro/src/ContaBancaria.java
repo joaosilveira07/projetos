@@ -30,22 +30,20 @@ public class ContaBancaria{
         if (valor <= 0){
             return false;
         }
-        else{
-            return true;
-        }
+        
+        return true;
     }
 
     public boolean possuiSaldoSuficiente(double valor){
         if (valor > this.saldo){
             return false;
         }
-        else{
-            return true;
-        }
+        
+        return true;
     }
     
     public void transferir(double valor, ContaBancaria destino){
-        if (validarValorPositivo(valor) && possuiSaldoSuficiente(valor)){
+        if (validarValorPositivo(valor)){
             this.sacar(valor);
             destino.depositar(valor);
 
@@ -54,6 +52,10 @@ public class ContaBancaria{
         else{
             System.out.println("Transação não autorizada.");
         }
+    }
+
+    public void exibirSaldo(){
+        System.out.printf("Saldo atual: %.2f %n", getSaldo());
     }
 
     public int getNumero(){
@@ -80,6 +82,7 @@ public class ContaBancaria{
         this.titular = titular;
     }
 
-
-
+    public double getSaldo(){
+        return this.saldo;
+    }
 }
