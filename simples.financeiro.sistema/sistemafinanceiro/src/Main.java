@@ -1,12 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        ContaBancaria conta1 = new ContaBancaria();
-        conta1.depositar(500);
-        conta1.depositar(0);
-        conta1.depositar(-500);
+        Cliente cliente1 = new Cliente("José Luiz", "12345678900", "06/11/2005");
+        
+        ContaBancaria conta1 = new ContaBancaria(0001, 99, cliente1);
 
-        conta1.sacar(250);
-        conta1.sacar(0);
-        conta1.sacar(500);
     }
 }

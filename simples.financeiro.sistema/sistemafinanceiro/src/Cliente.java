@@ -3,27 +3,32 @@ public class Cliente {
     private String cpf;
     private String dataNasc;
 
-    public String getNome(){
-        return this.nome;
+    public Cliente(String nome, String cpf, String dataNasc){
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNasc = dataNasc;
+    }
+    
+    public void alterarNome(String nome){
+        if (nome != null && !nome.isBlank()){
+            this.nome = nome;
+        }
     }
 
-    public void setNome(String nome){
-        this.nome = nome;
+    public void alterarDataNascimento(String dataNasc){
+        this.dataNasc = dataNasc;
+    }
+
+    public String getNome(){
+        return this.nome;
     }
 
     public String getCpf(){
         return this.cpf;
     }
 
-    public void setCpf(String cpf){
-        this.cpf = cpf;
-    }
-
     public String getDataNasc(){
         return this.dataNasc;
     }
 
-    public void setDataNasc(String dataNasc){
-        this.dataNasc = dataNasc;
-    }
 }

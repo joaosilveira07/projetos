@@ -4,25 +4,30 @@ public class ContaBancaria{
     private double saldo;
     private Cliente titular;
 
-    public void depositar(double valor){
+    public ContaBancaria(int numero, int agencia, Cliente titular){
+        this.numero = numero;
+        this.agencia = agencia;
+        this.saldo = 0;
+        this.titular = titular;
+    }
+    
+    public boolean depositar(double valor){
         if (validarValorPositivo(valor)){
             this.saldo += valor;
-            System.out.println("Depósito realizado com sucesso!");
-            System.out.printf("Saldo atualizado: %.2f %n", saldo);
+            return true;
         }
         else{
-            System.out.println("Transação não autorizada.");
+            return false;
         }
     }
 
-    public void sacar(double valor){
+    public boolean sacar(double valor){
         if (validarValorPositivo(valor) && possuiSaldoSuficiente(valor)){
             this.saldo -= valor;
-            System.out.println("Saque realizado com sucesso!");
-            System.out.printf("Saldo atualizado: %.2f %n", saldo);
+            return true;
         }
         else{
-            System.out.println("Transação não autorizada.");
+            return false;
         }
     }
 
@@ -42,47 +47,28 @@ public class ContaBancaria{
         return true;
     }
     
-    public void transferir(double valor, ContaBancaria destino){
-        if (validarValorPositivo(valor)){
-            this.sacar(valor);
-            destino.depositar(valor);
-
-            System.out.println("Transferência realizada com sucesso!");
+    public boolean transferir(double valor, ContaBancaria destino){
+        if (this.sacar(valor)){
+            return destino.depositar(valor);
         }
-        else{
-            System.out.println("Transação não autorizada.");
-        }
-    }
 
-    public void exibirSaldo(){
-        System.out.printf("Saldo atual: %.2f %n", getSaldo());
+        return false;
     }
 
     public int getNumero(){
         return this.numero;
     }
 
-    public void setNumero(int numero){
-        this.numero = numero;
-    }
-
     public int getAgencia(){
         return this.agencia;
-    }
-
-    public void setAgencia(int agencia){
-        this.agencia = agencia;
     }
 
     public Cliente getTitular(){
         return this.titular;
     }
 
-    public void setTitular(Cliente titular){
-        this.titular = titular;
-    }
-
     public double getSaldo(){
         return this.saldo;
     }
+
 }
